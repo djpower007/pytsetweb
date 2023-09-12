@@ -1,26 +1,25 @@
 name: hello-github-actions
 on:
     push:
-    branches:
-    - master
-    jobs:
-    build:
+     branches:
+     - main
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout_actions
-      uses: actions/checkout@v2
-    - name: setup-node
-    uses: actions/setup-node@v1
-    with:
-          node-version:'14'
-    - name: npm install and build
-    run: |
-            npm install
-            npm run build
-    - name: commit push
-    run: |
-           git .
-           git commit -m "update" -a
-           git push
-    env:
-    email: 7847087@qq.com
+       - name: checkout_actions
+         uses: actions/checkout@v2
+       - name: setup-node
+         uses: actions/setup-node@v1
+         with: 
+               node-version: '14'
+       - name: npm install and build
+         run: |
+              npm install
+              npm run build
+       - name: commit push
+         run: |
+                git .
+                git commit -m "update" -a
+                git push
+
