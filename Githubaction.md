@@ -28,7 +28,7 @@ https://github.com/marketplace?type=actions
  格式docker://{image}:{tag}
        - name: My first step
         uses: docker://alpine:3.8
-自定义的action引用
+#自定义的action引用
 #使用tags
  - uses: actions/javascript-action@v1.0.1
 #多个版本，使用sha来引用
@@ -38,3 +38,74 @@ steps:
 steps:
   - uses: actions/javascript-action@main
 
+#输入和输出
+name: "Example"
+description: "Receives file and generates output"
+inputs:
+  file-path: # id of input
+    description: "Path to test script"
+    required: true
+    default: "test-file.js"
+outputs:
+  results-file: # id of output
+    description: "Path to results file"
+
+#自定义环境变量
+定义   POSTGRES_HOST  POSTGRES_PORT两个变量，用在执行的脚本中
+jobs:
+  example-job:
+      steps:
+        - name: Connect to PostgreSQL
+          run: node client.js
+          env:
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: 5432
+
+#给job设置default任务
+给shell设置一个默认的文件夹
+defaults:
+  run:
+    shell: bash
+    working-directory: ./scripts
+
+#给一个job1设置默认的环境
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./scripts
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v3  
+      - name: Run a script
+        run: ./my-script.sh
+      - name: Run another script
+        run: ./my-other-script.sh
+#执行两个脚本
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v3  
+      - name: Make the script files executable
+        run: chmod +x my-script.sh my-other-script.sh
+      - name: Run the scripts
+        run: |
+          ./my-script.sh
+          ./my-other-script.sh
+
+
+#注意参数为下划线 _ 比如：workflow_dispatch: 
