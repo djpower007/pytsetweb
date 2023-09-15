@@ -1,6 +1,7 @@
 name: output file
 run-name: ${{ github.actor }} output file to artifacts
-on: 
+on:    
+
   workflow_dispatch: 
 jobs: 
   upload-job:
@@ -18,7 +19,7 @@ jobs:
   down-load:
     needs: upload-job
     name: download file
-    uses: actions\download-artifact@v3
+    uses: actions/download-artifact@v3
     with: 
       name: out-put-file
 
