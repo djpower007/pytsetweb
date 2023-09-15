@@ -1,7 +1,7 @@
 name: output file
 run-name: ${{ github.actor }} output file to artifacts
 on: 
-  workflow-dispatch: 
+  workflow_dispatch: 
 jobs: 
   upload-job:
     runs-on: ubuntu-latest
