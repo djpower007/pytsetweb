@@ -2,7 +2,7 @@ name: hello-github-actions
 on:
     push:
      branches:
-     - main
+     - dev
 jobs:
   build:
     runs-on: ubuntu-latest
