@@ -80,7 +80,6 @@ jobs:
               ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')}}
               ${{ join(github.event.issue.labels.*.name, '**')}}
               ${{ toJSON('json string')}}
-              #  ${{ toJSON(  )}}
               ${{ toJSON( 'run-env' )}}
   matrix-set:
     runs-on: ubuntu-latest
