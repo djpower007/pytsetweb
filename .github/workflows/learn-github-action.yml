@@ -12,6 +12,32 @@ jobs:
           node-version: "14"
       - run: npm install -g bats
       - run: bats -v
+  run-env:
+    runs-on: ubuntu-latest
+    defaults:
+      run:    
+        working-directory: ./
+    steps:
+      - name: set env 
+        env:
+          myNull: ${{ null }}
+          myBoolean: ${{ false }}
+          myIntegerNumber: ${{ 711 }}
+          myFloatNumber: ${{ -9.2 }}
+          myHexNumber: ${{ 0xff }}
+          myExponentialNumber: ${{ -2.99e-2 }}
+          myString: Mona the Octocat
+          myStringInBraces: ${{ 'It''s open source!' }}
+        run: |
+          echo "$myNull" && echo "$myBoolean" 
+          echo "$myNull" 
+          echo "$myBoolean" 
+          echo "$myIntegerNumber" 
+          echo "$myFloatNumber" 
+          echo "$myHexNumber" 
+          echo "$myExponentialNumber" 
+          echo "$myString" 
+          echo "$myStringInBraces"     
   run-scripts:
     runs-on: ubuntu-latest
     defaults:
@@ -25,7 +51,18 @@ jobs:
       - name: privage
         run: chmod 777 ./testpwd.sh
       - name: run the script
-        run: ./testpwd.sh
-      - name: run the script
-        run: ./my-other-script.sh
+        run: |
+          ./testpwd.sh
+          echo  "$myNull" && echo "$myBoolean" 
+          echo "$" 
+          echo "$myBoolean" 
+          echo "$myIntegerNumber" 
+          echo "$myFloatNumber" 
+          echo "$myHexNumber" 
+          echo "$myExponentialNumber" 
+          echo "$myString" 
+          echo "$myStringInBraces" 
+
+#      - name: run the script
+#        run: ./my-other-script.sh
      
