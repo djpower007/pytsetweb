@@ -1,3 +1,0 @@
-# name: download file
-# run-name: ${{ github.actor }} download file from artifacts
-

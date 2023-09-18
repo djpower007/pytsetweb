@@ -21,9 +21,16 @@ jobs:
     needs: upload-job
     name: download file
     steps:
+<<<<<<< HEAD
       - name: download files
         uses: actions/download-artifact@v3
         with: 
           name: out-put-file
+=======
+    - name: download output.log to artifacts
+      uses: actions/download-artifact@v3
+      with: 
+        name: out-put-file
+>>>>>>> b6892f442055e3603f682529fd0bf3e6f992241b
 
        
