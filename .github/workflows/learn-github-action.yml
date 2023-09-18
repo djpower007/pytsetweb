@@ -69,6 +69,7 @@ jobs:
         uses: actions/checkout@v3
       - name: test functions
         run:  |
+              ${{contains('Hello World','ello')}}
               contains('Hello World','ello')
               contains("This is a string","this is a")
               contains("This is a string","This a")
