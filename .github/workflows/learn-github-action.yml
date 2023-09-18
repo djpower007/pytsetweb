@@ -20,12 +20,12 @@ jobs:
     steps:
       - name: checkout the repository to the runner
         uses: action/checkout@v3
-      - name: 
-        uses: echo -e '#!/bin/bash\npwd' >> testpwd.sh
-      - name: 
-        uses: chmod 777 ./testpwd.sh
-      - name: 
-        uses: ./testpwd.sh
-      - name: 
-        uses: ./my-other-script.sh
+      - name: write a script
+        run: echo -e '#!/bin/bash\npwd' >> testpwd.sh
+      - name: privage
+        run: chmod 777 ./testpwd.sh
+      - name: run the script
+        run: ./testpwd.sh
+      - name: run the script
+        run: ./my-other-script.sh
      
