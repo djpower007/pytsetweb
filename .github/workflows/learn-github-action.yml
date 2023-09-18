@@ -19,7 +19,7 @@ jobs:
         working-directory: ~/
     steps:
       - name: checkout the repository to the runner
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: write a script
         run: echo -e '#!/bin/bash\npwd' >> testpwd.sh
       - name: privage
