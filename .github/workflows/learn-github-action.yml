@@ -65,23 +65,23 @@ jobs:
   run-functions:
     runs-on: ubuntu-latest
     steps: 
-      - name: functions devops
+      - name: functions-devops
         uses: actions/checkout@v3
       - name: test functions
         run:  |
-              ${{contains('Hello World','ello')}}
-              contains('Hello World','ello')
-              contains("This is a string","this is a")
-              contains("This is a string","This a")
-              contains(github.event.issue.labels.*.name, 'bug')
-              startsWith('Hello world', 'He')
-              endsWith('Hello world', 'He')
-              format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')
-              format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')
-              join(github.event.issue.labels.*.name, '**')
-              toJSON("json string")
-              toJSON(run-functions)
-              toJSON( run-env )
+              ${{ contains('Hello World','ello') }}
+              ${{ contains('Hello World','ello') }}
+              ${{ contains('This is a string','this is a')}}
+              ${{ contains('This is a string','This a')}}
+              ${{ contains(github.event.issue.labels.*.name, 'bug')}}
+              ${{ startsWith('Hello world', 'He')}}
+              ${{ endsWith('Hello world', 'He')}}
+              ${{ format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')}}
+              ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')}}
+              ${{ join(github.event.issue.labels.*.name, '**')}}
+              ${{ toJSON('json string')}}
+              #  ${{ toJSON(  )}}
+              ${{ toJSON( 'run-env' )}}
   matrix-set:
     runs-on: ubuntu-latest
     outputs:
