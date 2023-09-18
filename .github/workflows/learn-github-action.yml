@@ -1,6 +1,7 @@
 name: learn-github-action
 run-name: ${{ github.actor }} is learning Github Actions
-on: [push]
+on:  
+ workflow_dispatch: 
 jobs: 
   check-bats-version: 
     runs-on: ubuntu-latest
@@ -11,3 +12,20 @@ jobs:
           node-version: "14"
       - run: npm install -g bats
       - run: bats -v
+  run-scripts:
+    runs-on: ubuntu lastest
+    defaults:
+      run:    
+        working-directory: ./scripts
+    steps:
+      - name: checkout the repository to the runner
+        uses: action/checkout@v3
+      - name: 
+        uses: echo -e '#!/bin/bash\npwd' >> testpwd.sh
+      - name: 
+        uses: chmod 777 ./testpwd.sh
+      - name: 
+        uses: ./testpwd.sh
+      - name: 
+        uses: ./my-other-script.sh
+     

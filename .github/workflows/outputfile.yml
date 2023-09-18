@@ -1,7 +1,6 @@
 name: output file
 run-name: ${{ github.actor }} output file to artifacts
 on:    
-
   workflow_dispatch: 
 jobs: 
   upload-job:
