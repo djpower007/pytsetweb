@@ -109,3 +109,10 @@ jobs:
 
 
 #注意参数为下划线 _ 比如：workflow_dispatch: 
+
+-uses 使用版本
+-run 为执行
+
+myStringInBraces: ${{ 'It''s open source!' }}
+ echo "$myStringInBraces"   
+转义后It's open source!
