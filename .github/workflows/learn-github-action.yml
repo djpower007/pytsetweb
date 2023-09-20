@@ -37,7 +37,9 @@ jobs:
           echo "$myHexNumber" 
           echo "$myExponentialNumber" 
           echo "$myString" 
-          echo "$myStringInBraces"     
+          echo "$myStringInBraces" 
+        if: ${{ success() }}   
+ 
   run-scripts:
     runs-on: ubuntu-latest
     defaults:
@@ -48,8 +50,10 @@ jobs:
         uses: actions/checkout@v3
       - name: write a script
         run: echo -e '#!/bin/bash\npwd' >> testpwd.sh
+        if: ${{ cancelled() }}   
       - name: privage
         run: chmod 777 ./testpwd.sh
+        if: ${{ failure() }}   
       - name: run the script
         run: |
           ./testpwd.sh
@@ -62,6 +66,8 @@ jobs:
           echo "$myExponentialNumber" 
           echo "$myString" 
           echo "$myStringInBraces" 
+        if: ${{ success() }}
+
   run-functions:
     runs-on: ubuntu-latest
     steps: 
@@ -73,12 +79,9 @@ jobs:
               ${{ contains('Hello World','ello') }}
               ${{ contains('This is a string','this is a')}}
               ${{ contains('This is a string','This a')}}
-              ${{ contains(github.event.issue.labels.*.name, 'bug')}}
               ${{ startsWith('Hello world', 'He')}}
               ${{ endsWith('Hello world', 'He')}}
               ${{ format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')}}
-              ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')}}
-              ${{ join(github.event.issue.labels.*.name, '**')}}
               ${{ toJSON('json string')}}
               ${{ toJSON( 'run-env' )}}
   matrix-set:
