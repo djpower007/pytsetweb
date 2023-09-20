@@ -50,10 +50,10 @@ jobs:
         uses: actions/checkout@v3
       - name: write a script
         run: echo -e '#!/bin/bash\npwd' >> testpwd.sh
-        if: ${{ cancelled() }}   
+        #if: ${{ cancelled() }}   
       - name: privage
         run: chmod 777 ./testpwd.sh
-        if: ${{ failure() }}   
+        #if: ${{ failure() }}   
       - name: run the script
         run: |
           ./testpwd.sh
@@ -66,7 +66,7 @@ jobs:
           echo "$myExponentialNumber" 
           echo "$myString" 
           echo "$myStringInBraces" 
-        if: ${{ success() }}
+        if: ${{ always() }}
 
   run-functions:
     runs-on: ubuntu-latest
