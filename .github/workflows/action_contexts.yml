@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./etc/  
+        working-directory: ./  
     steps: 
       - name: checkout the repository to the runner
         uses: actions/checkout@v3
