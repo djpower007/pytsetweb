@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
 jobs: 
   prod-chenk:
-    if: ${{ github.ref == 'refs/head/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     defaults:
       run:
