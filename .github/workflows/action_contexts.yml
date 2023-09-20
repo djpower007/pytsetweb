@@ -15,7 +15,6 @@ jobs:
       - name: check pwd
         run: | 
             pwd
-            cat ./passwd
       - name: show github refs
         run: echo "Deploying to proudtion server on branch $GITHUB_REF"
         
