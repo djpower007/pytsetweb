@@ -94,7 +94,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.matrix-set.outputs.matrix) }}
     steps:
-      - run: build
+      - run: echo "$matrix"
         
 
 #      - name: run the script
