@@ -1,0 +1,21 @@
+name: git branch run test
+run-name: ${{ github.actor_id }} git branch main run
+on:
+    workflow_dispatch:
+jobs: 
+  prod-chenk:
+    if: ${{ github.ref == 'refs/head/main' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./etc/  
+    steps: 
+      - name: check pwd
+        run: | 
+            pwd
+            cat ./passwd
+      - name: show github refs
+        run: echo "Deploying to proudtion server on branch $GITHUB_REF"
+        
+
+
