@@ -10,6 +10,8 @@ jobs:
       run:
         working-directory: ./etc/  
     steps: 
+      - name: checkout the repository to the runner
+        uses: actions/checkout@v3
       - name: check pwd
         run: | 
             pwd
