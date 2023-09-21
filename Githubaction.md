@@ -116,3 +116,12 @@ jobs:
 myStringInBraces: ${{ 'It''s open source!' }}
  echo "$myStringInBraces"   
 转义后It's open source!
+
+可选触发模式 on: [push,pull_request]
+在runs-on后面就可加判断  if: ${{ github.event_name == 'pull_request' }}
+
+在最后细节处定义的env变量，会覆盖大局的。
+- run: echo 'Hi ${{ env.mascot }}'  # Hi Mona
+      - run: echo 'Hi ${{ env.mascot }}'  # Hi Octocat
+        env:
+          mascot: Octocat

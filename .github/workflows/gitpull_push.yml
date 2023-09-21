@@ -1,6 +1,9 @@
 name: choose git push or pull CI
 run-name: github push or CI
 on: [push,pull_request]
+env: 
+  mascot: Mona
+  super_duper_var: chris
 jobs: 
   normal_ci: 
     runs-on: ubuntu-latest
@@ -23,3 +26,16 @@ jobs:
              echo ls > ./b.sh
              chmod 777 ./b.sh
              ./b.sh
+  windows_job:
+    runs-on: windows-latest
+    steps:
+      - run: echo 'Hi ${{ env.mascot }}'  # Hi Mona
+      - run: echo 'Hi ${{ env.mascot }}'  # Hi Octocat
+        env:
+           mascot: Octocat
+  linux_job:
+    runs-on: ubuntu-latest
+    env:
+      mascot: Tux
+    steps:
+      - run: echo 'Hi ${{ env.mascot }}'  # Hi Tux
