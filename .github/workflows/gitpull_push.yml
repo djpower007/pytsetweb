@@ -1,0 +1,18 @@
+name: choose git push or pull CI
+run-name: github push or CI
+on: [push,pull_request]
+jobs: 
+  normal-ci: 
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@V4
+      - name: normal CI
+        run: pwd
+  pull_request_ci:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions\checkout@v4
+      - name: pull_request
+        run: ll
