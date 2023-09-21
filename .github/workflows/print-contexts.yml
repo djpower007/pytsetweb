@@ -1,0 +1,33 @@
+name: action contexts pretty-print
+run-name: github context print ${{ github.actor }}
+on: 
+   workflow_dispatch:
+jobs: 
+  dump_context_to_log:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-lastest
+    steps:
+      - name: dump github context
+        env: 
+          GITHUB_CONTEXT: ${{ toJson(github) }}  
+        run: echo "$GITHUB_CONTEXT"
+      - name: dump job log
+        env: 
+          GITHUB_JOB: ${{ toJson(job) }}
+        run: echo "$GITHUB_JOB"
+      - name: dump steps log
+        env: 
+            GITHUB_STEPS: ${{ toJson(steps) }}
+        run: echo "$GITHUB_STEPS"
+      - name: dump runner comtext
+        env:
+            GITHUB_RUNNER: ${{ toJson(runner) }}
+        run: echo "$GITHUB_RUNNER"
+      - name: dump strategy context
+        env: 
+            STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: dump matrix context
+        env: 
+            MATRIX_CONTEXT: ${{toJson(matrix)}}
+        run: echo "MATRIX_CONTEXT"

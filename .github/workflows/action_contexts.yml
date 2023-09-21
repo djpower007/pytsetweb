@@ -1,5 +1,5 @@
 name: git branch run test
-run-name: ${{ github.actor_id }} git branch main run
+run-name: ${{ github.actor_id  }} git branch main run ${{ github.actor}}
 on:
     workflow_dispatch:
 jobs: 
