@@ -13,10 +13,11 @@ jobs:
              chmod 777 ./a.sh
              ./a.sh
   pull_request_ci:
+    #runs-on: ubuntu-latest
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
-      - uses: actions\checkout@v4
+      - uses: actions/checkout@v4
       - name: pull_request
         run: |
              echo ls > ./b.sh
