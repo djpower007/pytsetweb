@@ -5,7 +5,7 @@ on:
 jobs: 
   dump_context_to_log:
     if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - name: dump github context
         env: 
@@ -15,7 +15,7 @@ jobs:
         env: 
           GITHUB_JOB: ${{ toJson(job) }}
         run: echo "$GITHUB_JOB"
-      - name: dump steps log
+      - name: dump steps context
         env: 
             GITHUB_STEPS: ${{ toJson(steps) }}
         run: echo "$GITHUB_STEPS"
