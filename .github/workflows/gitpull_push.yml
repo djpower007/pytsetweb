@@ -7,7 +7,7 @@ env:
 jobs: 
   normal_ci: 
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v4
       - name: normal CI
