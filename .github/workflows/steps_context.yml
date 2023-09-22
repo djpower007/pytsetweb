@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: checkout
-        uses: actions\checkout@v4
+        uses: actions/checkout@v4
       - name: generate 0 or 1
         id: generate_number
         run: echo "random_number = $(( $RANDOM % 2)) " >> $GITHUB_OUTPUT
