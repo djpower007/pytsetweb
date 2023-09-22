@@ -14,4 +14,4 @@ jobs:
       - name: pass or fail
         run: |
             
-            if [[${{ steps.generate_number.outputs.random_number }} == 0 ]]; then exit 0; else exit 1; fi
+            if [[ ${{ steps.generate_number.outputs.random_number }} == 0 ]]; then exit 0; else exit 1; fi
