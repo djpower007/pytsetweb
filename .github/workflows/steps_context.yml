@@ -10,7 +10,8 @@ jobs:
         uses: actions/checkout@v4
       - name: generate 0 or 1
         id: generate_number
-        run: echo "random_number = $(( $RANDOM % 2)) " >> $GITHUB_OUTPUT
+        run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
       - name: pass or fail
         run: |
-            if [[${{ steps.generate_number.outputs.random_number }} == 0 ]] ; then exit 0; else exit 1 ; fi  
+            
+            if [[${{ steps.generate_number.outputs.random_number }} == 0 ]]; then exit 0; else exit 1; fi
