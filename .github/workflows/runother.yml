@@ -4,5 +4,4 @@ on:
   workflow_dispatch:
 jobs:
    job:
-    uses: ./github/workflows/jobcontext.yml
-    
+    uses: ./.github/workflows/jobcontext.yml
