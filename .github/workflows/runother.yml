@@ -1,0 +1,8 @@
+name: run manual
+run-name: manual run job
+on:
+  workflow_dispatch:
+jobs:
+   job:
+    uses: ./github/workflows/jobcontext.yml
+    
