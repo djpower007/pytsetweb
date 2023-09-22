@@ -1,0 +1,29 @@
+name: Jobs context example
+run-name: reusable workflow
+on: 
+  workflow_call: 
+    outputs: 
+       firstword:
+         description: "The first output string."
+         value: ${{ jobs.reusable_job.outputs.output1 }}
+       secondword:
+         description: "The second output string."
+         value: ${{ jobs.reusable_job.outputs.output2 }}
+
+jobs:
+  reusable_job:
+    name: generate output
+    runs-on: ubuntu-latest
+    
+    outputs: 
+       output1: ${{ steps.step1.outputs.firstword }}
+       output2: ${{ steps.step2.outputs.secondword }}
+    steps:
+      - id: step1
+        run: echo "firstword = hello" >> $GITHUB_OUTPUT
+      - id: step2
+        run: echo "secondword = Chris" >> $GITHUB_OUTPUT
+         
+  
+      
+  
