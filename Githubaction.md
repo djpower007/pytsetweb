@@ -125,3 +125,21 @@ myStringInBraces: ${{ 'It''s open source!' }}
       - run: echo 'Hi ${{ env.mascot }}'  # Hi Octocat
         env:
           mascot: Octocat
+引用上下文变量
+jobs.一个job的名称.分支项.分支变量
+
+一个job的步骤里的变量在其他步骤引用，调用。
+第一个方法，在steps同步，给一个outputs,下写入一个output1的输出，在另一个job中引用，如：
+输出：    outputs:
+        randomjob: ${{ strategy.job-index }}
+引入：    with:
+          name: test-job-${{ needs.strategy_context.outputs.randomjob }}.log
+第二个方法，运行的环境变量，对GitHub Actions 使用命令 set-env ，这将是环境变量被注入到以后的步骤
+echo "{environment_variable_name}={value}" >> "$GITHUB_ENV"
+steps:
+  # 这将会在第一个 `run` 脚本中设置 `FOO` 环境变量。
+  # 然后指示 GitHub Actions 在随后的运行步骤中使其可用。
+  - run: |
+      export FOO=bar
+      echo "::set-env name=FOO::$FOO"
+  - run: echo $FOO
