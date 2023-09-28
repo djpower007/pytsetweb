@@ -177,3 +177,5 @@ Names must not start with the GITHUB_ prefix.
 Names must not start with a number.
 Names are case insensitive.
 Names must be unique at the level they are created at.
+
+在yml里var大小写不敏感，但是运行环境里，大小写敏感

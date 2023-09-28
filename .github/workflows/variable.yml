@@ -24,8 +24,8 @@ jobs:
       - name: use if var run script
         if: ${{env.day_of_week == 'Monday'}}
         run: |
-          echo "$Greeting $First_name. Today is $day_of_week"
-          echo "${{ env.Greeting }} ${{ env.First_Name }}. Today is ${{ env.DAY_OF_WEEK }}!"
+          echo "$Greeting $First_Name. Today is $day_of_week"
+          echo "${{ env.Greeting }} ${{ env.First_Name }}. Today is ${{ env.day_of_week }}!"
         env:
           First_Name: mike
 
