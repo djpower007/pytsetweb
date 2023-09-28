@@ -16,5 +16,17 @@ jobs:
           echo "$Greeting $First_name. Today is $day_of_week"
         env:
           First_name: Chris
+    display-ifvar: 
+      runs-on: ubuntu-latest
+      env: 
+        Greeting: Hello two
+      steps: 
+      - name: use if var run script
+        if: ${{env.day_of_week == 'Monday'}}
+        run: |
+          echo "$Greeting $First_name. Today is $day_of_week"
+          echo "${{ env.Greeting }} ${{ env.First_Name }}. Today is ${{ env.DAY_OF_WEEK }}!"
+        env:
+          First_Name: mike
 
   

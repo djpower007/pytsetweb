@@ -143,3 +143,37 @@ steps:
       export FOO=bar
       echo "::set-env name=FOO::$FOO"
   - run: echo $FOO
+
+NEED 变量调用
+ outputs:
+  build_id: ${{ steps.build_step.outputs.build_id }} 
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        id: build_step
+        run: |
+          ./build
+          echo "build_id=$BUILD_ID" >> $GITHUB_OUTPUT  # build_id 到 outputs 输出
+下一个job调用
+   - run: ./deploy --build ${{ needs.build.outputs.build_id }}
+   
+runner内部的环境变量，需要根据runner的主机，写变量的引用，比如ubuntu是$var  powershell是env:$var：
+on:
+  workflow_dispatch:
+env:
+  day_of_week: Monday 
+jobs:
+    display-variables:
+      env:
+        Greeting: Hello
+      steps:
+        - name: Use variables
+          env:
+           First_name: Chris
+
+变量取名
+Names can only contain alphanumeric characters ([a-z], [A-Z], [0-9]) or underscores (_). Spaces are not allowed.
+Names must not start with the GITHUB_ prefix.
+Names must not start with a number.
+Names are case insensitive.
+Names must be unique at the level they are created at.
