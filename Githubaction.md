@@ -179,3 +179,13 @@ Names are case insensitive.
 Names must be unique at the level they are created at.
 
 在yml里var大小写不敏感，但是运行环境里，大小写敏感
+
+#push和merge时触发
+on: [push, merge]
+#with为环境设置参数
+   with:
+     node-version: '14'
+ - name: install bats
+   run: npm install -g bats
+ - run: bats-V
+#run 需要一个 “- ”分支，要么用name一个“- name”，要么自己“- run”
