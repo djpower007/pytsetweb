@@ -1,0 +1,129 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# GitHub recommends pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA.
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: Deploy Service To Amazon EKS
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      tags:
+        description: "Test scenario tags"
+        required: false
+        type: boolean
+      environment:
+        description: "Environment to run tests against"
+        type: environment
+        required: false
+  push:
+    branches:
+      - eks
+      - master
+      - dev
+      - stg
+
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout
+
+env:
+  AWS_REGION: cn-northwest-1 # set this to your preferred AWS region, e.g. us-west-1
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+ 
+      
+  build:
+    name: Build Versioned Artifact & Push To AWS ECR Repo
+    # needs: [setup]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, eks]
+    outputs:
+      # runner: ${{ steps.step1.outputs.runner }}
+      stage: ${{ steps.step1.outputs.stage }}
+
+    steps:
+      - name: Set environmental variables based on branch
+        id: step1
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+              echo "AWS_ROLE=${{ secrets.AWS_GITHUB_REPO_ACCESS_ROLE_ARN_PROD }}" >> "$GITHUB_ENV"
+              echo "stage=prod" >> $GITHUB_OUTPUT
+          elif [[ $GITHUB_REF == 'refs/heads/stg' ]]; then
+              echo "AWS_ROLE=${{ secrets.AWS_GITHUB_REPO_ACCESS_ROLE_ARN_STG }}" >> "$GITHUB_ENV"
+              echo "stage=stg" >> $GITHUB_OUTPUT
+          elif [[ $GITHUB_REF == 'refs/heads/dev' ]]||[[ $GITHUB_REF == 'refs/heads/eks' ]]; then
+              echo "AWS_ROLE=${{ secrets.AWS_GITHUB_REPO_ACCESS_ROLE_ARN_DEV }}" >> "$GITHUB_ENV"
+              echo "stage=dev" >> $GITHUB_OUTPUT
+          else
+              echo "not supported yet"
+          fi
+      - name: Checkout
+        uses: actions/checkout@v3
+
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        # env:
+          # STAGE: ${{ needs.setup.outputs.stage }}
+          # AWS_ROLE: ${{ secrets.AWS_GITHUB_REPO_ACCESS_ROLE_ARN_DEV }}
+        with:
+          role-to-assume: ${{ env.AWS_ROLE }}
+          role-session-name: aws-session
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.cn-northwest-1.amazonaws.com.cn
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+
+      - name: Build Dockerfile from template and then build the docker image
+        id: build-dockerfile
+        run: |
+          bash ./make.sh create_dockerfile_webpack  ${{ steps.step1.outputs.stage }}
+          bash ./make.sh build_docker_image
+
+      - name: Push docker image to AWS ECR
+        id: push-docker-image
+        run: |
+          bash -x ./make.sh push_docker_image_to_ecr
+
+  deploy:
+    needs: [build]
+    name: Deploy Service To EKS Cluster
+    runs-on: 
+      - self-hosted
+      - eks
+      - ${{ needs.build.outputs.stage }}
+    env:
+      stage: ${{ needs.build.outputs.stage }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare helm scripts
+        id: prepare-helm-scripts
+        run: |
+          bash ./make.sh create_helm_charts $stage
+          bash ./make.sh update_helm_deployment $stage
+          bash ./make.sh update_helm_values $stage
+          bash ./make.sh helm_dryrun  $stage
+
+      - name: Deploy helm release
+        id: deploy-helm-relese
+        run: |
+          bash ./make.sh helm_release_deploy  $stage
