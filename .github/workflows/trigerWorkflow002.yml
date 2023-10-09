@@ -1,11 +1,10 @@
+name: Test workflow trigter
 on:
     workflow_run:
       workflows: ["Preflight"]
       types: [requested]
-      branches-ignore:
-        - "dev"
-name: Test workflow trigter
-
+      branches:
+        - "main"
 jobs:
   test-job:
     name: Test Step
