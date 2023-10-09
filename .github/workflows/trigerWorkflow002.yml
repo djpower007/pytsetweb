@@ -3,7 +3,7 @@ on:
       workflows: ["Preflight"]
       types: [requested]
       branches-ignore:
-        - "main"
+        - "dev"
 name: Test workflow trigter
 
 jobs:
