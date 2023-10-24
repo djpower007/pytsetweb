@@ -191,3 +191,9 @@ on: [push, merge]
 #run 需要一个 “- ”分支，要么用name一个“- name”，要么自己“- run”
 
 on: [push, fork] 同时发生才能triggering
+
+on:
+  push:
+    paths:
+      - 'sub-project/**'
+      - '!sub-project/docs/**'
